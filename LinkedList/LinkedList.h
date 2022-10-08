@@ -1,5 +1,7 @@
 #include "../DataStructure.h"
 #include <stdexcept>
+#include <iostream>
+
 using namespace std; 
 
 /**
@@ -89,5 +91,9 @@ class LinkedList : public DataStructure<T> {
             //Access Functions
             virtual T getHead();
             virtual T & operator[](int index); // Needs to return reference otherwise can't assign to using []
+
+            //TODO: delete this, or move it into the Datastructure class
+            //Is only to be used for testing/debugging at this point in time.
+            void print();
 };
 

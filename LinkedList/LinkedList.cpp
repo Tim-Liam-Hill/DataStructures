@@ -354,3 +354,17 @@ T & LinkedList<T>::operator[](int index){
     }
     return currentNode->getValueByReference();
 }
+
+template <class T>
+void LinkedList<T>::print(){
+
+    Node * thisCurrentNode = head;
+
+    while(thisCurrentNode != NULL){
+
+        cout<<thisCurrentNode->getValue()<<" ";
+        thisCurrentNode = thisCurrentNode->getNext();
+    }
+    cout<<endl;
+}
+

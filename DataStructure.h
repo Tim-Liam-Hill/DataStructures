@@ -34,6 +34,7 @@ class DataStructure {
 
         virtual void add(T) = 0;
         virtual void remove(T) = 0;
+        virtual void removeAll() = 0;
 };
 
 #endif

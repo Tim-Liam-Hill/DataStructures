@@ -16,4 +16,3 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 clean:
 	del -f $(TARGET) 
 	del %OBJ_DIR:~2%\*.o
-	

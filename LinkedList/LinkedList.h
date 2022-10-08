@@ -10,6 +10,7 @@ using namespace std;
  * 
  * TODO: does every function here need to be virtual?
  * TODO: implement private functions for use by iterator eg getNextNode.
+ * TODO: add and remove functions and how size is affected. Should this happen at lowest level functions? I think use since these are the functions that actually do the thing that decreases the size.
  * @tparam T 
  */
 template <typename T>
@@ -42,6 +43,7 @@ class LinkedList : public DataStructure{
                 void setNext(Node *);
                 void setValue(T);
                 T getValue();
+                T & getValueByReference(); //Honestly, included for sake of uniformity. Best practice to not directly access other classes variable in this case(?)
         };
 
         Node<T> * head;
@@ -49,9 +51,16 @@ class LinkedList : public DataStructure{
         int size; //faster to update this when we make changes as opposed to traversing list each time we need the list size
 
         //helper functions for node deletion
+        void deleteOnlyNode();
         void deleteHead();
         void deleteTail();
         void deleteNode(Node<T> *, Node<T> *);
+
+        //helper function for adding nodes
+        void addAtHead(T);
+        void addNode(T,int)
+
+        bool isOutOfBounds(int);
 
         public:
             //Constructor and Destructors
@@ -78,6 +87,6 @@ class LinkedList : public DataStructure{
 
             //Access Functions
             virtual T head();
-            virtual T operator[](int index);
+            virtual T & operator[](int index); // Needs to return reference otherwise can't assign to using []
 };
 

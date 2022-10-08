@@ -1,0 +1,15 @@
+CXX=g++
+CFLAGS=-I. -Wall
+TARGET=main
+OBJS= main.o LinkedList.o
+
+all: $(OBJS)
+	$(CXX) $(CFLAGS) $(OBJS) -o $(TARGET)
+    
+%.o: %.cpp
+	$(CXX) $(CFLAGS) -c $< -o $@
+    
+clean:
+	del -f $(TARGET) $(OBJS)
+
+

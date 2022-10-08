@@ -2,51 +2,52 @@
 
 //NODE FUNCTIONS
 
-template <typename T>
-LinkedList<T>::Node<T>::Node(){
-    this->next = null;
+template <class T>
+LinkedList<T>::Node::Node(){
+    this->next = NULL;
 }
 
-template <typename T>
-LinkedList<T>::Node<T>::Node(T val){
+template <class T>
+LinkedList<T>::Node::Node(T val){
     this->value = val;
-    this->next = null;
+    this->next = NULL;
 }
 
-LinkedList<T>::Node<T>::~Node(){
+template <class T>
+LinkedList<T>::Node::~Node(){
     //nothing to delete, deletion of nodes is responsibility of LinkedList class
 }
 
-template <typename T>
-Node * getNext(){
+template <class T>
+typename LinkedList<T>::Node * LinkedList<T>::Node::getNext(){
     return this->next;
 }
 
-template <typename T>
-void LinkedList<T>::Node<T>::setNext(Node * next){
+template <class T>
+void LinkedList<T>::Node::setNext(Node * next){
     this->next = next;
 }
 
-template <typename T>
-void LinkedList<T>::Node<T>::setValue(T val){
+template <class T>
+void LinkedList<T>::Node::setValue(T val){
     this->value = val;
 }
 
-template <typename T>
-T LinkedList<T>::Node<T>::getValue(){
+template <class T>
+T LinkedList<T>::Node::getValue(){
     return value;
 }
 
-template <typename T>
-T & LinkedList<T>::Node<T>::getValueByReference(){
+template <class T>
+T & LinkedList<T>::Node::getValueByReference(){
     return & value;
 }
 
-//LINKEDLIST FUNCTIONS
-template <typename T>
+//LINKEDLIST FUNCTIONS --------------------------------------------------------------------------------------------
+template <class T>
 LinkedList<T>::LinkedList(){
-    head = null;
-    tail = null;
+    head = NULL;
+    tail = NULL;
 }
 
 /**
@@ -54,16 +55,16 @@ LinkedList<T>::LinkedList(){
  * TODO: Is there a way to use the iterator for a LinkedList here without cirular referencing?
  * @tparam T 
  */
-template <typename T>
-LinkedList<T>::LinkedList(const & LinkedList ll){
-    Node<T> * currentNode = ll.head;
-    this->head = null;
-    this->tail = null;
+template <class T>
+LinkedList<T>::LinkedList(const LinkedList & ll){
+    Node * currentNode = ll.head;
+    this->head = NULL;
+    this->tail = NULL;
     this->size = 0;
 
-    while(currentNode != null){
-        Node<T> * newNode = new Node<T>(currentNode->getValue());
-        if(tail != null)
+    while(currentNode != NULL){
+        Node * newNode = new Node(currentNode->getValue());
+        if(tail != NULL)
             tail->setNext(newNode);
         
         tail = currentNode;
@@ -72,30 +73,30 @@ LinkedList<T>::LinkedList(const & LinkedList ll){
     }
 }
 
-template <typename T>
+template <class T>
 LinkedList<T>::~LinkedList(){
-    Node<T> * currentNode = head;
-    while(currentNode != null){
-        Node<T> * nextNode = currentNode->getNext();
+    Node * currentNode = head;
+    while(currentNode != NULL){
+        Node * nextNode = currentNode->getNext();
         delete currentNode;
         currentNode = nextNode;
     }
 }
 
-template <typename T>
-virtual int LinkedList<T>::size(){
+template <class T>
+int LinkedList<T>::getSize(){
     return this->size;
 }
 
-template <typename T>
-virtual void LinkedList<T>::isEmpty(){
+template <class T>
+bool LinkedList<T>::isEmpty(){
     return size == 0;
 }
 
-template <typename T>
-virtual bool LinkedList<T>::contains(const T & val){
-    Node<T> * currentNode = head;
-    while(currentNode != null){
+template <class T>
+bool LinkedList<T>::contains(const T & val){
+    Node * currentNode = head;
+    while(currentNode != NULL){
         if(currentNode->getValue() == val)
             return true;
 
@@ -104,19 +105,19 @@ virtual bool LinkedList<T>::contains(const T & val){
     return false;
 }
 
-template <typename T>
-virtual bool LinkedList<T>::operator == (const LinkedList & ll) const{
-    Node<T> * thisCurrentNode = head;
-    Node<T> * otherCurrentNode = ll.head;
+template <class T>
+bool LinkedList<T>::operator == (const LinkedList & ll) const{
+    Node * thisCurrentNode = head;
+    Node * otherCurrentNode = ll.head;
 
-    while(thisCurrentNode != null && otherCurrentNode != null){
+    while(thisCurrentNode != NULL && otherCurrentNode != NULL){
         if(thisCurrentNode->getValue() != otherCurrentNode->getValue())
             return false;
         thisCurrentNode = thisCurrentNode->getNext();
         otherCurrentNode = otherCurrentNode->getNext();
     }
 
-    if(thisCurrentNode == null && otherCurrentNode == null)
+    if(thisCurrentNode == NULL && otherCurrentNode == NULL)
         return true;
 
     return false;    
@@ -130,18 +131,18 @@ virtual bool LinkedList<T>::operator == (const LinkedList & ll) const{
  * @return true 
  * @return false 
  */
-template <typename T>
-virtual bool LinkedList<T>::operator = (const LinkedList & ll){
+template <class T>
+bool LinkedList<T>::operator = (const LinkedList & ll){
 
     this->removeAll();
-    Node<T> * currentNode = ll.head;
-    this->head = null;
-    this->tail = null;
+    Node * currentNode = ll.head;
+    this->head = NULL;
+    this->tail = NULL;
     this->size = ll.size();
 
-    while(currentNode != null){
-        Node<T> * newNode = new Node<T>(currentNode->getValue());
-        if(tail != null)
+    while(currentNode != NULL){
+        Node * newNode = new Node(currentNode->getValue());
+        if(tail != NULL)
             tail->setNext(newNode);
         
         tail = currentNode;
@@ -151,8 +152,8 @@ virtual bool LinkedList<T>::operator = (const LinkedList & ll){
     return true;
 }
 /*
-template <typename T>
-virtual Iterator LinkedList<T>::createIterator(){
+template <class T>
+Iterator LinkedList<T>::createIterator(){
 
 }
 */
@@ -163,10 +164,10 @@ virtual Iterator LinkedList<T>::createIterator(){
  * 
  * @tparam T 
  */
-template <typename T>
-virtual void LinkedList<T>::add(T val){
-    Node<T> * newNode = new Node<T>(val);
-    if(this->head == null){ // empty list
+template <class T>
+void LinkedList<T>::add(T val){
+    Node * newNode = new Node(val);
+    if(this->head == NULL){ // empty list
         head = newNode;
         tail = newNode;
     }
@@ -178,12 +179,12 @@ virtual void LinkedList<T>::add(T val){
     size ++;
 }
 
-template <typename T>
-virtual void LinkedList<T>::remove(T val){
+template <class T>
+void LinkedList<T>::remove(T val){
     //Could use contains function here but that would be inefficient, we have to reiterate through the list if deleting anyway
-    Node<T> * currentNode = head;
-    Node<T> * prevNode = null;
-    while(currentNode != null){
+    Node * currentNode = head;
+    Node * prevNode = NULL;
+    while(currentNode != NULL){
         if(currentNode->getValue() == val){
             //case of head == tail included here for the sake of clarity: I.M.O its easier to see this cae is handled if we check it 
             //in this function
@@ -205,48 +206,48 @@ virtual void LinkedList<T>::remove(T val){
 
 }
 
-template <typename T>
+template <class T>
 void LinkedList<T>::deleteOnlyNode(){
     delete head;
-    head = null;
-    tail = null;
+    head = NULL;
+    tail = NULL;
     size = 0;
 }
 
-template <typename T>
+template <class T>
 void LinkedList<T>::deleteHead(){
-   Node<T> * temp = head;
+   Node * temp = head;
    delete head;
    head = temp;
    size --;
 }
 
-template <typename T>
-void LinkedList<T>::deleteTail(Node<T> * prevNode){
-    prevNode->setNext(null);
+template <class T>
+void LinkedList<T>::deleteTail(Node * prevNode){
+    prevNode->setNext(NULL);
     delete tail;
     size --;
 }
 
-template <typename T>
-void LinkedList<T>::deleteNode(Node<T> * currentNode, Node<T> * prevNode){
+template <class T>
+void LinkedList<T>::deleteNode(Node * currentNode, Node * prevNode){
     prevNode ->setNext(currentNode->getNext());
     delete currentNode;
     size --;
 }
 
-template <typename T>
+template <class T>
 bool LinkedList<T>::isOutOfBounds(int index){
     if(index < 0 || index >= size)
         return true;
     return false;
 }
 
-template <typename T>
-virtual void LinkedList<T>::insertAt(T val, int index){
+template <class T>
+void LinkedList<T>::insertAt(T val, int index){
 
     if(isOutOfBounds(index))
-        throw std:out_of_range("ERROR: index " + index + " is out of range for LinkedList with size " + size);
+        throw std::out_of_range("ERROR: index " + to_string(index) + " is out of range for LinkedList with size " + to_string(size));
 
     if(index == 0){
         //check if tail == head, heandles case for size -1 where size = 1
@@ -259,81 +260,75 @@ virtual void LinkedList<T>::insertAt(T val, int index){
     else addNode(val, index);
 }
 
-template <typename T>
-void LinkedList<T>::addAtHead(T){
-    Node<T> * newNode = new Node<T>(val);
+template <class T>
+void LinkedList<T>::addAtHead(T val){
+    Node * newNode = new Node(val);
     newNode->setNext(head);
     head = newNode;
     size ++;
 }
 
-template <typename T>
+template <class T>
 void LinkedList<T>::addNode(T val, int index){
 
-    Node<T> * currentNode = head;
-    Node<T> * prevNode = null;
+    Node * currentNode = head;
+    Node * prevNode = NULL;
 
     for(int i=0; i<index; ++i){
         prevNode = currentNode;
         currentNode = currentNode->getNext();
     }
-    Node<T> * newNode = new Node<T>(val);
+    Node * newNode = new Node(val);
     newNode->setNext(currentNode);
     prevNode->setNext(newNode);
     size ++;
 }
 
-template <typename T>
-virtual void LinkedList<T>::deleteAt(int index){
+template <class T>
+void LinkedList<T>::deleteAt(int index){
 
     if(isOutOfBounds(index))
-        throw std:out_of_range("ERROR: index " + index + " is out of range for LinkedList with size " + size);
+        throw std::out_of_range("ERROR: index " + to_string(index) + " is out of range for LinkedList with size " + to_string(size));
 
     if(index == 0){
         //check if tail == head, heandles case for size -1 where size = 1
         if(head == tail)
-            add(T); //this function already handles this case
+            deleteOnlyNode();
         else{
-            Node<T> * newNode = new Node<T>(T);
-            newNode->setNext(head);
-            head = newNode;
-            size ++;
+            deleteHead();
         }
     }
     else if(index == size -1){
-        add(T);
+        deleteTail();
     }
     else{
-        Node<T> * currentNode = head;
-        Node<T> * prevNode = null;
+        Node * currentNode = head;
+        Node * prevNode = NULL;
 
         for(int i=0; i<index; ++i){
             prevNode = currentNode;
             currentNode = currentNode->getNext();
         }
-        Node<T> * newNode = new Node<T>(T);
-        newNode->setNext(currentNode);
-        prevNode->setNext(newNode);
-        size ++;
+        deleteNode(currentNode, prevNode);
     }
 }
 
-template <typename T>
-virtual void LinkedList<T>::swap(int index1, int index2){
+template <class T>
+void LinkedList<T>::swap(int index1, int index2){
 
     if(isOutOfBounds(index1))
-        throw std:out_of_range("ERROR: index " + index1 + " is out of range for LinkedList with size " + size);
+        throw std::out_of_range("ERROR: index " + to_string(index1) + " is out of range for LinkedList with size " + to_string(size));
 
     if(isOutOfBounds(index2))
-        throw std:out_of_range("ERROR: index " + index2 + " is out of range for LinkedList with size " + size);
+        throw std::out_of_range("ERROR: index " + to_string(index2) + " is out of range for LinkedList with size " + to_string(size));
     
     T temp = (*this)[index1];
     (*this)[index1] = (*this)[index2];
     (*this)[index2] = temp;
 }
 
-template <typename T>
-virtual T LinkedList<T>::head(){
+template <class T>
+T LinkedList<T>::getHead(){
     return head->getValue();
 }
 
@@ -346,13 +341,13 @@ virtual T LinkedList<T>::head(){
  * @param index 
  * @return T& 
  */
-template <typename T>
-virtual T & LinkedList<T>::operator[](int index){
+template <class T>
+T & LinkedList<T>::operator[](int index){
 
     if(isOutOfBounds(index))
-        throw std:out_of_range("ERROR: index " + index + " is out of range for LinkedList with size " + size);
+        throw std::out_of_range("ERROR: index " + to_string(index) + " is out of range for LinkedList with size " + to_string(size));
     
-    Node<T> * currentNode = head;
+    Node * currentNode = head;
 
     for(int i=0; i<index; ++i){
         currentNode = currentNode->getNext();

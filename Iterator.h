@@ -7,7 +7,7 @@
  * they all at a minimum need to include the following functions.
  * @tparam T 
  */
-template <typename T>
+template <class T>
 class Iterator {
 
     public:

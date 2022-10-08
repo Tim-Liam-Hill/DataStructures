@@ -13,8 +13,8 @@ using namespace std;
  * TODO: add and remove functions and how size is affected. Should this happen at lowest level functions? I think use since these are the functions that actually do the thing that decreases the size.
  * @tparam T 
  */
-template <typename T>
-class LinkedList : public DataStructure{
+template <class T>
+class LinkedList : public DataStructure<T> {
 
         protected:
         /**
@@ -29,7 +29,7 @@ class LinkedList : public DataStructure{
          * TODO: duplicated iteration code in multiple functions. Is there a way to reduce this?
          * @tparam T 
          */
-        template <typename T>
+        
         class Node{
             private:    
                 T value;
@@ -46,32 +46,33 @@ class LinkedList : public DataStructure{
                 T & getValueByReference(); //Honestly, included for sake of uniformity. Best practice to not directly access other classes variable in this case(?)
         };
 
-        Node<T> * head;
-        Node<T> * tail;
+        Node * head;
+        Node * tail;
         int size; //faster to update this when we make changes as opposed to traversing list each time we need the list size
 
         //helper functions for node deletion
         void deleteOnlyNode();
         void deleteHead();
-        void deleteTail();
-        void deleteNode(Node<T> *, Node<T> *);
+        void deleteTail(Node * );
+        void deleteNode(Node *, Node *);
 
         //helper function for adding nodes
         void addAtHead(T);
-        void addNode(T,int)
+        void addNode(T,int);
 
         bool isOutOfBounds(int);
 
         public:
             //Constructor and Destructors
             LinkedList();
-            LinkedList(const & LinkedList);
+            LinkedList(const LinkedList<T> &);
             ~LinkedList();
 
-            virtual int size();
-            virtual void isEmpty();
+            virtual int getSize();
+            virtual bool isEmpty();
             virtual bool contains(const T &);
             virtual bool operator == (const LinkedList &) const;
+            //Creates Deep Copy
             virtual bool operator = (const LinkedList &);
             //virtual Iterator createIterator();
 
@@ -86,7 +87,7 @@ class LinkedList : public DataStructure{
             virtual void swap(int, int);
 
             //Access Functions
-            virtual T head();
+            virtual T getHead();
             virtual T & operator[](int index); // Needs to return reference otherwise can't assign to using []
 };
 

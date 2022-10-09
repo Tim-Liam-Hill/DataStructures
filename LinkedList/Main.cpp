@@ -26,8 +26,8 @@ int main(){
 void testLinkedList(){
     
     testInsertion();
- 
-    
+    testDeletion();
+
 }
 
 /**
@@ -79,7 +79,16 @@ void testInsertion(){
     assert(expected == ll->toString());
     cout<<endl;
 
-    delete ll;
+    cout<<"Case 3: insertion into middle of list, just after head and just before tail"<<endl;
+    expected = "78 4 0 -14 3 23 67 4 -2 17 4";
+
+    ll->insertAt(17, 7);
+    ll->insertAt(23, 4);
+    ll->insertAt(4, 1);
+    actual = ll->toString();
+    cout<<"\tExpected: "<<expected<<endl;
+    cout<<"\tActual:   "<<actual<<endl;
+    assert(actual == expected);
 
     cout<<"--- INSERTION TESTS PASSED ---"<<endl<<endl;
 }

@@ -40,7 +40,7 @@ T LinkedList<T>::Node::getValue(){
 
 template <class T>
 T & LinkedList<T>::Node::getValueByReference(){
-    return & value;
+    return value;
 }
 
 //LINKEDLIST FUNCTIONS --------------------------------------------------------------------------------------------
@@ -138,7 +138,7 @@ bool LinkedList<T>::operator = (const LinkedList & ll){
     Node * currentNode = ll.head;
     this->head = NULL;
     this->tail = NULL;
-    this->size = ll.size();
+    this->size = ll.size;
 
     while(currentNode != NULL){
         Node * newNode = new Node(currentNode->getValue());
@@ -207,6 +207,20 @@ void LinkedList<T>::remove(T val){
 }
 
 template <class T>
+void LinkedList<T>::removeAll(){
+    Node * currentNode = head; 
+    Node * temp;
+    tail = NULL; 
+    size = 0;
+    while(currentNode != NULL){
+        temp = currentNode;
+        currentNode = currentNode->getNext();
+        delete temp;
+    }
+
+}
+
+template <class T>
 void LinkedList<T>::deleteOnlyNode(){
     delete head;
     head = NULL;
@@ -250,10 +264,7 @@ void LinkedList<T>::insertAt(T val, int index){
         throw std::out_of_range("ERROR: index " + to_string(index) + " is out of range for LinkedList with size " + to_string(size));
 
     if(index == 0){
-        //check if tail == head, heandles case for size -1 where size = 1
-        if(head == tail)
-            add(val); //this function already handles this case
-        else addAtHead(val);   
+        addAtHead(val);   //works for case head==tail != NULL
     }
     else if(index == size -1)
         add(val);
@@ -297,9 +308,6 @@ void LinkedList<T>::deleteAt(int index){
         else{
             deleteHead();
         }
-    }
-    else if(index == size -1){
-        deleteTail();
     }
     else{
         Node * currentNode = head;
@@ -355,16 +363,27 @@ T & LinkedList<T>::operator[](int index){
     return currentNode->getValueByReference();
 }
 
+
+/**
+ * This function assumes that the '<<' operator of class 'T' is overloaded 
+ * 
+ * @tparam T 
+ * @return string 
+ */
 template <class T>
-void LinkedList<T>::print(){
+string LinkedList<T>::toString(){
 
     Node * thisCurrentNode = head;
+    string listRepresentation = "";
 
     while(thisCurrentNode != NULL){
 
-        cout<<thisCurrentNode->getValue()<<" ";
+        stringstream ss;
+        ss<<thisCurrentNode->getValue()<<" ";
+        listRepresentation += ss.str();
         thisCurrentNode = thisCurrentNode->getNext();
     }
-    cout<<endl;
+    
+    return listRepresentation.substr(0, listRepresentation.length()-1);
 }
 

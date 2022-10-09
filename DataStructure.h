@@ -2,6 +2,8 @@
 #define DATASTRUCTURE_H
 
 #include <string>
+#include <sstream>
+#include <assert.h>
 //#include "Iterator.h"
 
 using namespace std;
@@ -39,6 +41,9 @@ class DataStructure {
         virtual void add(T) = 0;
         virtual void remove(T) = 0;
         virtual void removeAll() = 0;
+        
+        //Represent the data struture for ease of testing and visualisation
+        virtual string toString() = 0;
 };
 
 #endif

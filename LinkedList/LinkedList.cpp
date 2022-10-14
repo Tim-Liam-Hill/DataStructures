@@ -167,6 +167,7 @@ Iterator LinkedList<T>::createIterator(){
  */
 template <class T>
 void LinkedList<T>::add(T val){
+    
     Node * newNode = new Node(val);
     if(this->head == NULL){ // empty list
         head = newNode;
@@ -252,16 +253,25 @@ void LinkedList<T>::deleteNode(Node * currentNode, Node * prevNode){
 }
 
 template <class T>
-bool LinkedList<T>::isOutOfBounds(int index){
+bool LinkedList<T>::isOutOfBoundsForAccess(int index){
     if(index < 0 || index >= size)
         return true;
     return false;
 }
 
 template <class T>
+bool LinkedList<T>::isOutOfBoundsForInsert(int index){
+    if(index < 0 || index >= size + 1)
+        return true;
+    return false;
+}
+
+
+
+template <class T>
 void LinkedList<T>::insertAt(T val, int index){
 
-    if(isOutOfBounds(index))
+    if(isOutOfBoundsForInsert(index))
         throw std::out_of_range("ERROR: index " + to_string(index) + " is out of range for LinkedList with size " + to_string(size));
 
     if(index == 0){
@@ -299,7 +309,7 @@ void LinkedList<T>::addNode(T val, int index){
 template <class T>
 void LinkedList<T>::deleteAt(int index){
 
-    if(isOutOfBounds(index))
+    if(isOutOfBoundsForAccess(index))
         throw std::out_of_range("ERROR: index " + to_string(index) + " is out of range for LinkedList with size " + to_string(size));
 
     if(index == 0){
@@ -325,10 +335,10 @@ void LinkedList<T>::deleteAt(int index){
 template <class T>
 void LinkedList<T>::swap(int index1, int index2){
 
-    if(isOutOfBounds(index1))
+    if(isOutOfBoundsForAccess(index1))
         throw std::out_of_range("ERROR: index " + to_string(index1) + " is out of range for LinkedList with size " + to_string(size));
 
-    if(isOutOfBounds(index2))
+    if(isOutOfBoundsForAccess(index2))
         throw std::out_of_range("ERROR: index " + to_string(index2) + " is out of range for LinkedList with size " + to_string(size));
     
     T temp = (*this)[index1];
@@ -353,7 +363,7 @@ T LinkedList<T>::getHead(){
 template <class T>
 T & LinkedList<T>::operator[](int index){
 
-    if(isOutOfBounds(index))
+    if(isOutOfBoundsForAccess(index))
         throw std::out_of_range("ERROR: index " + to_string(index) + " is out of range for LinkedList with size " + to_string(size));
     
     Node * currentNode = head;

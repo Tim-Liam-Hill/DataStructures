@@ -277,7 +277,7 @@ void LinkedList<T>::insertAt(T val, int index){
     if(index == 0){
         addAtHead(val);   //works for case head==tail != NULL
     }
-    else if(index == size -1)
+    else if(index == size) //NOT size -1, since appending is adding beyond current final index
         add(val);
     else addNode(val, index);
 }
@@ -286,6 +286,8 @@ template <class T>
 void LinkedList<T>::addAtHead(T val){
     Node * newNode = new Node(val);
     newNode->setNext(head);
+    if(tail == NULL)   //this handles case of empty list prepend 
+        tail = newNode;
     head = newNode;
     size ++;
 }

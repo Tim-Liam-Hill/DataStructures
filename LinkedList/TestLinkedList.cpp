@@ -73,12 +73,10 @@ void TestLinkedList::testInsertion(){
     cout<<"Case 3: insertion into middle of list, just after head and just before tail"<<endl;
     expected = "78 4 0 -14 3 23 67 4 -2 17 4";
 
-    cout<<"Just before tail"<<endl;
     ll->insertAt(17, 7);
-    cout<<"In middle"<<endl;
     ll->insertAt(23, 4);
-    cout<<"Just after head"<<endl;
     ll->insertAt(4, 1);
+    
     actual = ll->toString();
     cout<<"\tExpected: "<<expected<<endl;
     cout<<"\tActual:   "<<actual<<endl;

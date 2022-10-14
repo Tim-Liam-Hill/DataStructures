@@ -8,6 +8,17 @@ using namespace std;
 
 void testLinkedList();
 void testInsertion();
+void testCopyConstructor();
+
+//For resuse
+void printTestingCategoryStart(string category){
+    cout<<"--- TESTING "<<category<<" ---"<<endl<<endl;
+}
+
+//For reuse
+void printTestingCategoryEnd(string category){
+    cout<<"--- "<<category<<" TESTS PASSED ---"<<endl<<endl;
+}
 
 int main(){
 
@@ -21,13 +32,13 @@ int main(){
  * TODO: come up with better unit testing, since there is probably a better way 
  * Idea is: create a test class that is a friend of LinkedList. This allows checking of the state 
  * of LinkedList after each operation. 
- * 
+ * TODO: make sure every method is tested 
+ * TODO: test for memory leaks 
  */
 void testLinkedList(){
     
     testInsertion();
-    testDeletion();
-
+    testCopyConstructor();
 }
 
 /**
@@ -36,7 +47,7 @@ void testLinkedList(){
  */
 void testInsertion(){
 
-    cout<<"--- TESTING INSERTION ---"<<endl<<endl;
+    printTestingCategoryStart("INSERTION");
 
     //Test appending from empty list
 
@@ -90,6 +101,37 @@ void testInsertion(){
     cout<<"\tActual:   "<<actual<<endl;
     assert(actual == expected);
 
-    cout<<"--- INSERTION TESTS PASSED ---"<<endl<<endl;
+    printTestingCategoryEnd("INSERTION");
 }
 
+void testCopyConstructor(){
+
+    printTestingCategoryStart("COPY CONSTRUCTOR");
+
+    cout<<"Case 1: Empty List"<<endl;
+    LinkedList<int> * ll = new LinkedList<int>();
+    LinkedList<int> * ll2 = new LinkedList<int>((*ll));
+    string expected = ll->toString();
+    string actual = ll2->toString();
+
+    cout<<"\tExpected string representation: "<<expected<<endl;
+    cout<<"\tActual string representation:   "<<actual<<endl;
+    assert(expected == actual);
+    cout<<endl;
+
+    cout<<"\tExpected size : "<<ll->getSize()<<endl;
+    cout<<"\tActual size:   "<<ll2->getSize()<<endl;
+    assert(ll->getSize() == ll2->getSize());
+    cout<<endl;
+
+    cout<<"\tExpected head: "<<ll->getHead()<<endl; //Only case where heads should be the same (ie NULL)
+    cout<<"\tActual head:   "<<ll2->getHead()<<endl;
+    assert(ll->getHead() == ll2->getHead());
+    cout<<endl;
+
+    cout<<"Case 2: Non-Empty List"<<endl;
+
+    cout<<"Case 2: Verifying that deep copy is made"<<endl;
+
+    printTestingCategoryEnd("COPY CONSTRUCTOR");
+}

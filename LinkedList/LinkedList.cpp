@@ -48,6 +48,7 @@ template <class T>
 LinkedList<T>::LinkedList(){
     head = NULL;
     tail = NULL;
+    size = 0;
 }
 
 /**

@@ -30,7 +30,7 @@ class LinkedList : public DataStructure<T> {
          * This class has no copy constructor since we do NOT want multiple nodes to point to
          * the same node in their next fields, this violates a singly linked ideaology.
          * 
-         * TODO: Is this tight coupling optimal? Should there be code reuse between this linked list and other linked lists??
+         * TODO: Is this tight coupling optimal? Should there be code reuse between this linked list and other linked lists?? Not all other linkedlists will inherit from this 
          * TODO: duplicated iteration code in multiple functions. Is there a way to reduce this?
          * @tparam T 
          */

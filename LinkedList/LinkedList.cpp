@@ -63,7 +63,7 @@ LinkedList<T>::LinkedList(const LinkedList & ll){
     this->size = 0;
 
     while(currentNode != NULL){
-        Node * newNode = new Node(currentNode->getValue());
+        Node * newNode = new Node(currentNode->getValue()); 
         if(tail != NULL)
             tail->setNext(newNode);
         

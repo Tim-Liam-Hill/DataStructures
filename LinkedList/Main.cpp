@@ -8,7 +8,11 @@ using namespace std;
 
 
 
-
+/**
+ * 
+ * TODO: Test for memory leaks using Valgrind
+ * @return int 
+ */
 int main(){
 
     TestLinkedList::testLinkedList();

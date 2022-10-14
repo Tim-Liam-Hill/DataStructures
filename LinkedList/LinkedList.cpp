@@ -54,21 +54,30 @@ LinkedList<T>::LinkedList(){
 /**
  * @brief Construct a new Linked List< T>:: Linked List object
  * TODO: Is there a way to use the iterator for a LinkedList here without cirular referencing?
+ * TODO: test if my if loop taken out of while loop is actually more efficient
  * @tparam T 
  */
 template <class T>
 LinkedList<T>::LinkedList(const LinkedList & ll){
-    Node * currentNode = ll.head;
+    Node * currentNode = ll.head; //WILL ALWAYS POINT TO INPUT LIST SO DO NOT POINT TO THIS FOR NEW LIST 
     this->head = NULL;
     this->tail = NULL;
     this->size = 0;
+    Node * newNode; 
+
+    if(currentNode != NULL){ //taking this out of the while loop is more efficient (avoids checking null head/tail in second loop every loop)
+        newNode = new Node(currentNode->getValue());
+        head = newNode;
+        tail = newNode;
+        size ++;
+        currentNode = currentNode ->getNext();
+    }
 
     while(currentNode != NULL){
-        Node * newNode = new Node(currentNode->getValue());
-        if(tail != NULL)
-            tail->setNext(newNode);
+        newNode = new Node(currentNode->getValue());
         
-        tail = currentNode;
+        tail->setNext(newNode);
+        tail = newNode;
         currentNode = currentNode->getNext();
         size++;
     }
@@ -348,8 +357,20 @@ void LinkedList<T>::swap(int index1, int index2){
     (*this)[index2] = temp;
 }
 
+/**
+ * Since dereferencing a NULL pointer leads to undefined behaviour it is best to check for head == NULL
+ * and throw an exception to make it clear there is an error. As an example of why this is necessary, on
+ * my machine running windows and using mingw32 to compile this program, my program terminates with
+ * no error message if this function is called but head == NULL. This is not programmer friendly.
+ * 
+ * @tparam T 
+ * @return T 
+ */
 template <class T>
 T LinkedList<T>::getHead(){
+    if(head == NULL){
+        throw new std::invalid_argument("Cannot fetch value from 'NULL' head node");
+    }
     return head->getValue();
 }
 

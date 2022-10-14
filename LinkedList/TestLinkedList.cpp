@@ -76,7 +76,7 @@ void TestLinkedList::testInsertion(){
     ll->insertAt(17, 7);
     ll->insertAt(23, 4);
     ll->insertAt(4, 1);
-    
+
     actual = ll->toString();
     cout<<"\tExpected: "<<expected<<endl;
     cout<<"\tActual:   "<<actual<<endl;
@@ -105,14 +105,42 @@ void TestLinkedList::testCopyConstructor(){
     assert(ll->getSize() == ll2->getSize());
     cout<<endl;
 
-    cout<<"\tExpected head: "<<ll->getHead()<<endl; //Only case where heads should be the same (ie NULL)
-    cout<<"\tActual head:   "<<ll2->getHead()<<endl;
-    assert(ll->getHead() == ll2->getHead());
+    cout<<"\tExpected head: "<<ll->head<<endl; //Only case where heads should be the same (ie NULL)
+    cout<<"\tActual head:   "<<ll2->head<<endl;
+    assert(ll->head == ll2->head);
     cout<<endl;
 
     cout<<"Case 2: Non-Empty List"<<endl;
+    int size = 9;
+    int arr []= {10,20,30,40,50,60,70,80,-100};
+    for(int i=0;i< size; i++)
+        ll->add(arr[i]);
+  
+    delete ll2;
+    ll2 = new LinkedList<int>(*ll);
 
-    cout<<"Case 2: Verifying that deep copy is made"<<endl;
+    expected = ll->toString();
+    actual = ll2->toString();
+
+    cout<<"\tExpected string representation: "<<expected<<endl;
+    cout<<"\tActual string representation:   "<<actual<<endl;
+    assert(expected == actual);
+    cout<<endl;
+
+    cout<<"\tExpected size : "<<ll->getSize()<<endl;
+    cout<<"\tActual size:    "<<ll2->getSize()<<endl;
+    assert(ll->getSize() == ll2->getSize());
+    cout<<endl;
+
+    cout<<"\tActual head: "<<ll->head<<endl; 
+    cout<<"\tshould not equal: "<<ll2->head<<endl;
+    assert(ll->head != ll2->head);
+    cout<<endl;
+
+    delete ll;
+    delete ll2;
+
+    cout<<"Case 3: Verifying that deep copy is made"<<endl;
 
     printTestingCategoryEnd("COPY CONSTRUCTOR");
 }

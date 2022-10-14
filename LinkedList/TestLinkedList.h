@@ -9,6 +9,7 @@
  * datastructure is correct after some function is run. It would be terrible to have a linkedlist 
  * appear correct with its output but actually have an erroneous internal state.
  * 
+ * TODO: Performance tests (?)
  */
 class TestLinkedList{
 

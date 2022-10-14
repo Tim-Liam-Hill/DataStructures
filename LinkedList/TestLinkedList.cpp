@@ -140,7 +140,24 @@ void TestLinkedList::testCopyConstructor(){
     delete ll;
     delete ll2;
 
-    cout<<"Case 3: Verifying that deep copy is made"<<endl;
+    cout<<"Case 3: Verifying that a deep copy is made"<<endl;
+
+    LinkedList<char *> * d1 = new LinkedList<char *>();
+    LinkedList<char *> * d2;
+
+    size = 5;
+    char *words[] = {"Exisistence","Emergence","Expedite","Plenty","Abiogenesis"};
+
+    for(int i=0;i<size; ++i)
+        d1->add(words[i]);
+    d2 = new LinkedList<char *>(*d1);
+
+    cout<<"\tList 1: "<<d1->toString()<<endl;
+    cout<<"\tList 2: "<<d2->toString()<<endl;
+    cout<<"\tNow delete List 1 and print List 2 again"<<endl;
+    delete d1;
+    cout<<"\tList 2: "<<d2->toString()<<endl;
+    delete d2;
 
     printTestingCategoryEnd("COPY CONSTRUCTOR");
 }

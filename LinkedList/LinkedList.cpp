@@ -77,7 +77,7 @@ LinkedList<T>::LinkedList(const LinkedList & ll){
         newNode = new Node(currentNode->getValue());
         
         tail->setNext(newNode);
-        tail = newNode;
+        tail = newNode; //previousl this was 'tail = currentNode' which was a big bug 
         currentNode = currentNode->getNext();
         size++;
     }

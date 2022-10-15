@@ -48,26 +48,36 @@ template <class T>
 LinkedList<T>::LinkedList(){
     head = NULL;
     tail = NULL;
+    size = 0;
 }
 
 /**
  * @brief Construct a new Linked List< T>:: Linked List object
  * TODO: Is there a way to use the iterator for a LinkedList here without cirular referencing?
+ * TODO: test if my if loop taken out of while loop is actually more efficient
  * @tparam T 
  */
 template <class T>
 LinkedList<T>::LinkedList(const LinkedList & ll){
-    Node * currentNode = ll.head;
+    Node * currentNode = ll.head; //WILL ALWAYS POINT TO INPUT LIST SO DO NOT POINT TO THIS FOR NEW LIST 
     this->head = NULL;
     this->tail = NULL;
     this->size = 0;
+    Node * newNode; 
+
+    if(currentNode != NULL){ //taking this out of the while loop is more efficient (avoids checking null head/tail in second loop every loop)
+        newNode = new Node(currentNode->getValue());
+        head = newNode;
+        tail = newNode;
+        size ++;
+        currentNode = currentNode ->getNext();
+    }
 
     while(currentNode != NULL){
-        Node * newNode = new Node(currentNode->getValue()); 
-        if(tail != NULL)
-            tail->setNext(newNode);
+        newNode = new Node(currentNode->getValue());
         
-        tail = currentNode;
+        tail->setNext(newNode);
+        tail = newNode; //previousl this was 'tail = currentNode' which was a big bug 
         currentNode = currentNode->getNext();
         size++;
     }
@@ -166,6 +176,7 @@ Iterator LinkedList<T>::createIterator(){
  */
 template <class T>
 void LinkedList<T>::add(T val){
+    
     Node * newNode = new Node(val);
     if(this->head == NULL){ // empty list
         head = newNode;
@@ -251,22 +262,31 @@ void LinkedList<T>::deleteNode(Node * currentNode, Node * prevNode){
 }
 
 template <class T>
-bool LinkedList<T>::isOutOfBounds(int index){
+bool LinkedList<T>::isOutOfBoundsForAccess(int index){
     if(index < 0 || index >= size)
         return true;
     return false;
 }
 
 template <class T>
+bool LinkedList<T>::isOutOfBoundsForInsert(int index){
+    if(index < 0 || index >= size + 1)
+        return true;
+    return false;
+}
+
+
+
+template <class T>
 void LinkedList<T>::insertAt(T val, int index){
 
-    if(isOutOfBounds(index))
+    if(isOutOfBoundsForInsert(index))
         throw std::out_of_range("ERROR: index " + to_string(index) + " is out of range for LinkedList with size " + to_string(size));
 
     if(index == 0){
         addAtHead(val);   //works for case head==tail != NULL
     }
-    else if(index == size -1)
+    else if(index == size) //NOT size -1, since appending is adding beyond current final index
         add(val);
     else addNode(val, index);
 }
@@ -275,6 +295,8 @@ template <class T>
 void LinkedList<T>::addAtHead(T val){
     Node * newNode = new Node(val);
     newNode->setNext(head);
+    if(tail == NULL)   //this handles case of empty list prepend 
+        tail = newNode;
     head = newNode;
     size ++;
 }
@@ -298,7 +320,7 @@ void LinkedList<T>::addNode(T val, int index){
 template <class T>
 void LinkedList<T>::deleteAt(int index){
 
-    if(isOutOfBounds(index))
+    if(isOutOfBoundsForAccess(index))
         throw std::out_of_range("ERROR: index " + to_string(index) + " is out of range for LinkedList with size " + to_string(size));
 
     if(index == 0){
@@ -324,10 +346,10 @@ void LinkedList<T>::deleteAt(int index){
 template <class T>
 void LinkedList<T>::swap(int index1, int index2){
 
-    if(isOutOfBounds(index1))
+    if(isOutOfBoundsForAccess(index1))
         throw std::out_of_range("ERROR: index " + to_string(index1) + " is out of range for LinkedList with size " + to_string(size));
 
-    if(isOutOfBounds(index2))
+    if(isOutOfBoundsForAccess(index2))
         throw std::out_of_range("ERROR: index " + to_string(index2) + " is out of range for LinkedList with size " + to_string(size));
     
     T temp = (*this)[index1];
@@ -335,8 +357,20 @@ void LinkedList<T>::swap(int index1, int index2){
     (*this)[index2] = temp;
 }
 
+/**
+ * Since dereferencing a NULL pointer leads to undefined behaviour it is best to check for head == NULL
+ * and throw an exception to make it clear there is an error. As an example of why this is necessary, on
+ * my machine running windows and using mingw32 to compile this program, my program terminates with
+ * no error message if this function is called but head == NULL. This is not programmer friendly.
+ * 
+ * @tparam T 
+ * @return T 
+ */
 template <class T>
 T LinkedList<T>::getHead(){
+    if(head == NULL){
+        throw new std::invalid_argument("Cannot fetch value from 'NULL' head node");
+    }
     return head->getValue();
 }
 
@@ -352,7 +386,7 @@ T LinkedList<T>::getHead(){
 template <class T>
 T & LinkedList<T>::operator[](int index){
 
-    if(isOutOfBounds(index))
+    if(isOutOfBoundsForAccess(index))
         throw std::out_of_range("ERROR: index " + to_string(index) + " is out of range for LinkedList with size " + to_string(size));
     
     Node * currentNode = head;

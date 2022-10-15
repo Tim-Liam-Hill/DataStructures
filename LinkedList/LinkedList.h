@@ -5,6 +5,8 @@
 #include <stdexcept>
 #include <iostream>
 
+class TestLinkedList; //Forward declaration so that we can make it a friend class
+
 using namespace std; 
 
 /**
@@ -20,6 +22,8 @@ using namespace std;
  */
 template <class T>
 class LinkedList : public DataStructure<T> {
+
+        friend class TestLinkedList;
 
         protected:
         /**
@@ -65,7 +69,8 @@ class LinkedList : public DataStructure<T> {
         void addAtHead(T);
         void addNode(T,int);
 
-        bool isOutOfBounds(int);
+        bool isOutOfBoundsForInsert(int);
+        bool isOutOfBoundsForAccess(int);
 
         public:
             //Constructor and Destructors

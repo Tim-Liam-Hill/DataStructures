@@ -16,7 +16,9 @@ template<typename T>
 class Vector : public DataStructure<T>
 {
     protected:
-        int size; 
+        
+        int size;       //total size of inner array 'arr'
+        int sizeUsed;   //amount of 'arr' actually being used 
         T * arr;
         /**
          * The thought behind this variable is as follows:
@@ -30,26 +32,33 @@ class Vector : public DataStructure<T>
          * this in theory should allow the insertion to go faster (at the cost of an extra 
          * 4 bytes of storage for this integer and some extra lines of code).)
          * 
+         * TODO: decide if this should be const. 
          */
         const int VOLUME_FULL_INCREMENT;
 
-        void resizeInnerArray();
+        void expandInnerArray();
 
     public: 
 
-        Vector();
+        Vector(int increment = 1);
         //Different to what follows, this sets initial size for inner array without having to specify an array
         Vector(int size, int increment = 1);
         Vector(T *, int size, int increment = 1);
         Vector(const Vector<T> &);
         virtual ~Vector();
 
-        virtual int getSize();
+        virtual int getSizeUsed();      //Trying to us every explicit function names here to avoid ambiguity when this function would be used
+        virtual int getSizeAvailable();
         virtual bool isEmpty();
         virtual bool contains(const T &);
         virtual void add(T);
         virtual void remove(T);
         virtual void removeAll();
+
+        virtual void shrinkToFit();
+
+        virtual void insertAt(T, int);
+        virtual void deleteAt(int);
 
         virtual T & operator [](int);
         virtual bool operator ==(const Vector &);

@@ -48,7 +48,7 @@ Vector<T>::Vector(const Vector<T> & vec){
 
 template<typename T> 
 Vector<T>::~Vector(){
-    delete T; //Will this memory leak if T holds pointers?? 
+    delete arr; //Will this memory leak if T holds pointers?? 
 }
 
 /**

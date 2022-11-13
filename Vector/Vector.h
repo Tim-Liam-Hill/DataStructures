@@ -1,7 +1,8 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
-#include "../DataStructure.h"
+#include <string>
+#include <stdexcept>
 
 using namespace std; 
 /**
@@ -13,7 +14,7 @@ using namespace std;
  * @tparam T 
  */
 template<typename T> 
-class Vector : public DataStructure<T>
+class Vector
 {
     protected:
         

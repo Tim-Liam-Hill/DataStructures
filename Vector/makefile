@@ -13,6 +13,9 @@ $(TARGET): $(OBJ_FILES)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(CFLAGS) -c -o $@ $<
 
+run: 
+	./$(TARGET)
+
 clean:
-	del $(TARGET) 
-	del $(WIN_OBJ_DIR)\*.o 
+	rm -f $(TARGET)    #del $(TARGET)        
+	rm -rf $(OBJ_DIR)\*.o #del $(WIN_OBJ_DIR)\*.o 

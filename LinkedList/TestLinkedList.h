@@ -1,6 +1,8 @@
 #ifndef TESTLINKEDLIST_H
 #define TESTLINKEDLIST_H
 
+#include <cassert>
+
 #include "LinkedList.h"
 
 /**

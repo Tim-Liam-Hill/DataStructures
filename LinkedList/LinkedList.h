@@ -1,9 +1,9 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
-#include "../DataStructure.h"
 #include <stdexcept>
 #include <iostream>
+#include <sstream>
 
 class TestLinkedList; //Forward declaration so that we can make it a friend class
 
@@ -21,7 +21,7 @@ using namespace std;
  * @tparam T 
  */
 template <class T>
-class LinkedList : public DataStructure<T> {
+class LinkedList  {
 
         friend class TestLinkedList;
 
@@ -87,7 +87,9 @@ class LinkedList : public DataStructure<T> {
             //virtual Iterator createIterator();
 
             //Functions that alter the underlying list
-            virtual void add(T);
+            virtual void pushBack(T);
+            virtual void push(T);
+
             //Will remove first occurrance of T
             virtual void remove(T);
             virtual void insertAt(T, int);
@@ -98,6 +100,7 @@ class LinkedList : public DataStructure<T> {
 
             //Access Functions
             virtual T getHead();
+            virtual T getTail();
             virtual T & operator[](int index); // Needs to return reference otherwise can't assign to using []
 
             virtual string toString();

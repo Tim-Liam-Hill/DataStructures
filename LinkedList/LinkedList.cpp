@@ -175,7 +175,7 @@ Iterator LinkedList<T>::createIterator(){
  * @tparam T 
  */
 template <class T>
-void LinkedList<T>::add(T val){
+void LinkedList<T>::pushBack(T val){
     
     Node * newNode = new Node(val);
     if(this->head == NULL){ // empty list
@@ -189,6 +189,15 @@ void LinkedList<T>::add(T val){
 
     size ++;
 }
+
+/**
+ * 
+*/
+template <typename T>
+void LinkedList<T>::push(T val){
+    this->insertAt(val, 0);
+}
+
 
 template <class T>
 void LinkedList<T>::remove(T val){
@@ -287,7 +296,7 @@ void LinkedList<T>::insertAt(T val, int index){
         addAtHead(val);   //works for case head==tail != NULL
     }
     else if(index == size) //NOT size -1, since appending is adding beyond current final index
-        add(val);
+        pushBack(val);
     else addNode(val, index);
 }
 
@@ -372,6 +381,20 @@ T LinkedList<T>::getHead(){
         throw new std::invalid_argument("Cannot fetch value from 'NULL' head node");
     }
     return head->getValue();
+}
+
+/**
+ * 
+ * 
+ * @tparam T 
+ * @return T 
+ */
+template <class T>
+T LinkedList<T>::getTail(){
+    if(tail == NULL){
+        throw new std::invalid_argument("Cannot fetch value from 'NULL' tail node");
+    }
+    return tail->getValue();
 }
 
 /**

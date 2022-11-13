@@ -36,7 +36,7 @@ void TestLinkedList::testInsertion(){
 
     for(int i=0; i< size; ++i){
         expected += to_string(arr[i]) + " ";
-        ll->add(arr[i]);
+        ll->pushBack(arr[i]);
     }
     actual = ll->toString();
     expected = expected.substr(0, expected.length()-1);
@@ -114,7 +114,7 @@ void TestLinkedList::testCopyConstructor(){
     int size = 9;
     int arr []= {10,20,30,40,50,60,70,80,-100};
     for(int i=0;i< size; i++)
-        ll->add(arr[i]);
+        ll->pushBack(arr[i]);
   
     delete ll2;
     ll2 = new LinkedList<int>(*ll);
@@ -149,7 +149,7 @@ void TestLinkedList::testCopyConstructor(){
     char *words[] = {"Exisistence","Emergence","Expedite","Plenty","Abiogenesis"};
 
     for(int i=0;i<size; ++i)
-        d1->add(words[i]);
+        d1->pushBack(words[i]);
     d2 = new LinkedList<char *>(*d1);
 
     cout<<"\tList 1: "<<d1->toString()<<endl;
